@@ -1,0 +1,231 @@
+2026-06-13 20:08:26,292 [INFO] main — ============================================================
+2026-06-13 20:08:26,292 [INFO] main —   🤖 AI-Powered API Chaos & Fuzzing Motoru
+2026-06-13 20:08:26,319 [INFO] main —   Groq Llama-3.3 + LangChain + FastAPI
+2026-06-13 20:08:26,320 [INFO] main — ============================================================
+2026-06-13 20:08:26,320 [INFO] main — ✅ GROQ_API_KEY yüklendi. (ilk 8 karakter: gsk_PnFC...)
+2026-06-13 20:08:26,320 [INFO] main — 🔧 Target API başlatılıyor (subprocess)...
+2026-06-13 20:08:26,325 [INFO] main — ✅ Target API süreci başlatıldı. PID: 19936
+2026-06-13 20:08:29,096 [INFO] chaos_engine — ChaosEngine başlatıldı: target=http://127.0.0.1:8000/register
+2026-06-13 20:08:29,096 [INFO] chaos_engine — Hedef API bekleniyor: http://127.0.0.1:8000/health
+2026-06-13 20:08:29,127 [INFO] chaos_engine — ✅ Hedef API hazır. (1.0 saniyede)
+2026-06-13 20:08:29,128 [INFO] main — 🧠 FuzzerAgent başlatılıyor...
+2026-06-13 20:08:29,292 [INFO] fuzzer_agent — FuzzerAgent başlatıldı: model=llama-3.3-70b-versatile
+2026-06-13 20:08:29,292 [INFO] main — 💡 LLM'den yıkıcı payload'lar üretiliyor...
+2026-06-13 20:08:29,292 [INFO] fuzzer_agent — LLM'den fuzzing payload'ları isteniyor...
+2026-06-13 20:08:30,579 [INFO] httpx — HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-13 20:08:30,592 [ERROR] fuzzer_agent — JSON parse hatası: Expecting ',' delimiter: line 4 column 77 (char 207)
+2026-06-13 20:08:30,592 [ERROR] fuzzer_agent — LLM payload üretiminde hata: Expecting ',' delimiter: line 4 column 77 (char 207)
+Traceback (most recent call last):
+  File "C:\Users\pc\Desktop\myprojects\Day 3 AI-Powered API Chaos & Fuzzing Motoru\fuzzer_agent.py", line 133, in generate_payloads
+    payloads = self._parse_llm_response(raw_content)
+  File "C:\Users\pc\Desktop\myprojects\Day 3 AI-Powered API Chaos & Fuzzing Motoru\fuzzer_agent.py", line 168, in _parse_llm_response
+    payloads = json.loads(json_str)
+  File "C:\Users\pc\AppData\Local\Programs\Python\Python310\lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+  File "C:\Users\pc\AppData\Local\Programs\Python\Python310\lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "C:\Users\pc\AppData\Local\Programs\Python\Python310\lib\json\decoder.py", line 353, in raw_decode
+    obj, end = self.scan_once(s, idx)
+json.decoder.JSONDecodeError: Expecting ',' delimiter: line 4 column 77 (char 207)
+2026-06-13 20:08:30,615 [WARNING] fuzzer_agent — Fallback payload'lar kullanılıyor.
+2026-06-13 20:08:30,616 [INFO] main — 📦 Toplam 15 payload üretildi.
+2026-06-13 20:08:30,616 [INFO] main — ⚡ Fuzzing başlıyor...
+2026-06-13 20:08:30,616 [INFO] chaos_engine — 🚀 Fuzzing oturumu başladı. Toplam payload: 15
+2026-06-13 20:08:30,617 [INFO] chaos_engine — 📤 Payload #1 gönderiliyor: {"username": "test", "age": 0, "email": "t@t.com"}
+2026-06-13 20:08:30,621 [WARNING] chaos_engine — 💥 CRASH! Payload #1 → HTTP 500 | Detay: Sıfıra bölme hatası: integer division or modulo by zero
+2026-06-13 20:08:31,127 [INFO] chaos_engine — 📤 Payload #2 gönderiliyor: {"username": "test", "age": -999, "email": "t@t.com"}
+2026-06-13 20:08:31,130 [INFO] chaos_engine — ✅ Payload #2 → HTTP 201 (Başarılı)
+2026-06-13 20:08:31,640 [INFO] chaos_engine — 📤 Payload #3 gönderiliyor: {"username": "test", "age": 25, "email": "t@t.com", "bio": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+2026-06-13 20:08:31,645 [WARNING] chaos_engine — 💥 CRASH! Payload #3 → HTTP 500 | Detay: Bellek hatası: Bio alanı çok uzun: 10001 karakter (max 10,000)
+2026-06-13 20:08:32,157 [INFO] chaos_engine — 📤 Payload #4 gönderiliyor: {"username": "test", "age": 25, "email": "t@t.com", "metadata": {"formula": "__import__('os').system('id')"}}
+2026-06-13 20:08:32,180 [INFO] chaos_engine — ✅ Payload #4 → HTTP 201 (Başarılı)
+2026-06-13 20:08:32,684 [INFO] chaos_engine — 📤 Payload #5 gönderiliyor: {"username": "' OR '1'='1'; DROP TABLE users; --", "age": 25, "email": "sql@inject.com"}
+2026-06-13 20:08:32,687 [INFO] chaos_engine — ✅ Payload #5 → HTTP 201 (Başarılı)
+2026-06-13 20:08:33,197 [INFO] chaos_engine — 📤 Payload #6 gönderiliyor: {"username": "<script>alert('XSS')</script>", "age": 25, "email": "xss@test.com", "bio": "<img src=x onerror=alert(1)>"}
+2026-06-13 20:08:33,200 [INFO] chaos_engine — ✅ Payload #6 → HTTP 201 (Başarılı)
+2026-06-13 20:08:33,715 [INFO] chaos_engine — 📤 Payload #7 gönderiliyor: {"username": "test", "age": 25, "email": "t@t.com", "score": Infinity}
+2026-06-13 20:08:33,716 [ERROR] chaos_engine — ❗ Payload #7 → İstek hatası: Out of range float values are not JSON compliant
+2026-06-13 20:08:34,229 [INFO] chaos_engine — 📤 Payload #8 gönderiliyor: {"username": 12345, "age": "twenty", "email": "t@t.com"}
+2026-06-13 20:08:34,232 [INFO] chaos_engine — ⚠️  Payload #8 → HTTP 422 (Validation Error)
+2026-06-13 20:08:34,745 [INFO] chaos_engine — 📤 Payload #9 gönderiliyor: {"username": null, "age": null, "email": null}
+2026-06-13 20:08:34,748 [INFO] chaos_engine — ⚠️  Payload #9 → HTTP 422 (Validation Error)
+2026-06-13 20:08:35,263 [INFO] chaos_engine — 📤 Payload #10 gönderiliyor: {"username": "test", "age": 99999999999999999999999, "email": "t@t.com"}
+2026-06-13 20:08:35,265 [INFO] chaos_engine — ✅ Payload #10 → HTTP 201 (Başarılı)
+2026-06-13 20:08:35,778 [INFO] chaos_engine — 📤 Payload #11 gönderiliyor: {"username": "", "age": 25, "email": ""}
+2026-06-13 20:08:35,780 [INFO] chaos_engine — ✅ Payload #11 → HTTP 201 (Başarılı)
+2026-06-13 20:08:36,294 [INFO] chaos_engine — 📤 Payload #12 gönderiliyor: {"username": "test", "age": 25, "email": "t@t.com", "metadata": {"formula": "1/0", "nested": {"formula": "exit()"}}}
+2026-06-13 20:08:36,297 [WARNING] chaos_engine — 💥 CRASH! Payload #12 → HTTP 500 | Detay: Çalışma zamanı hatası: Formula değerlendirme hatası: division by zero
+2026-06-13 20:08:36,808 [INFO] chaos_engine — 📤 Payload #13 gönderiliyor: {"username": "😈💀🔥😈💀🔥😈💀🔥😈💀🔥😈💀🔥😈💀🔥😈💀🔥😈💀🔥😈💀🔥😈💀🔥😈💀🔥😈💀🔥😈💀🔥😈💀🔥😈💀🔥😈💀🔥😈💀🔥😈💀🔥😈💀🔥😈💀🔥😈💀🔥😈💀🔥😈💀🔥😈💀🔥😈💀🔥😈💀🔥😈💀🔥😈💀🔥😈💀🔥😈💀🔥😈💀🔥😈💀🔥😈💀🔥😈💀🔥😈💀🔥😈
+2026-06-13 20:08:46,814 [WARNING] chaos_engine — ⏱️  Payload #13 → Timeout (10 s)
+2026-06-13 20:08:47,357 [INFO] chaos_engine — 📤 Payload #14 gönderiliyor: {"username": true, "age": false, "email": true}
+2026-06-13 20:08:57,373 [WARNING] chaos_engine — ⏱️  Payload #14 → Timeout (10 s)
+2026-06-13 20:08:57,890 [INFO] chaos_engine — 📤 Payload #15 gönderiliyor: {"username": ["admin", "root"], "age": [1, 2, 3], "email": {"key": "value"}}
+2026-06-13 20:09:07,908 [WARNING] chaos_engine — ⏱️  Payload #15 → Timeout (10 s)
+2026-06-13 20:09:08,414 [INFO] chaos_engine — ✅ Fuzzing tamamlandı. Gönderilen: 15 | Crash: 3 | Hata: 4 | Süre: 37.8s
+2026-06-13 20:09:08,415 [INFO] chaos_engine — 📝 Bug Report oluşturuluyor: bug_report.md
+2026-06-13 20:09:08,416 [INFO] chaos_engine — ✅ Bug Report kaydedildi: C:\Users\pc\Desktop\myprojects\Day 3 AI-Powered API Chaos & Fuzzing Motoru\bug_report.md
+2026-06-13 20:09:08,417 [INFO] main — ============================================================
+2026-06-13 20:09:08,417 [INFO] main —   📊 FUZZING OTURUMU TAMAMLANDI
+2026-06-13 20:09:08,417 [INFO] main —   Gönderilen Payload  : 15
+2026-06-13 20:09:08,417 [INFO] main —   Crash (HTTP 500)    : 3
+2026-06-13 20:09:08,417 [INFO] main —   Bağlantı Hataları   : 4
+2026-06-13 20:09:08,417 [INFO] main —   Crash Oranı         : 20.0%
+2026-06-13 20:09:08,417 [INFO] main —   Toplam Süre         : 37.8 saniye
+2026-06-13 20:09:08,417 [INFO] main —   Bug Report          : C:\Users\pc\Desktop\myprojects\Day 3 AI-Powered API Chaos & Fuzzing Motoru\bug_report.md
+2026-06-13 20:09:08,417 [INFO] main —   Log Dosyası         : chaos_run.log
+2026-06-13 20:09:08,417 [INFO] main — ============================================================
+2026-06-13 20:09:08,417 [WARNING] main — 🚨 3 adet HTTP 500 (crash) tespit edildi! Detaylar için bug_report.md inceleniyor.
+2026-06-13 20:09:08,418 [INFO] main — 🛑 Target API kapatılıyor (PID: 19936)...
+2026-06-13 20:09:08,420 [INFO] main — ✅ Target API süreci düzgün kapatıldı.
+2026-06-13 20:10:35,885 [INFO] main - ============================================================
+2026-06-13 20:10:35,885 [INFO] main -   [*] AI-Powered API Chaos & Fuzzing Motoru
+2026-06-13 20:10:35,886 [INFO] main -   Groq Llama-3.3 + LangChain + FastAPI
+2026-06-13 20:10:35,886 [INFO] main - ============================================================
+2026-06-13 20:10:35,886 [INFO] main - [OK] GROQ_API_KEY yuklendi. (ilk 8 karakter: gsk_PnFC...)
+2026-06-13 20:10:35,886 [INFO] main - [SETUP] Target API baslatiliyor (subprocess)...
+2026-06-13 20:10:35,890 [INFO] main - [OK] Target API sureci baslatildi. PID: 12608
+2026-06-13 20:10:38,482 [INFO] chaos_engine - ChaosEngine başlatıldı: target=http://127.0.0.1:8000/register
+2026-06-13 20:10:38,484 [INFO] chaos_engine - [ChaosEngine] API bekleniyor: http://127.0.0.1:8000/health
+2026-06-13 20:10:38,490 [INFO] chaos_engine - [OK] Hedef API hazir. (1.0 saniyede)
+2026-06-13 20:10:38,490 [INFO] main - [LLM] FuzzerAgent baslatiliyor...
+2026-06-13 20:10:38,643 [INFO] fuzzer_agent - FuzzerAgent başlatıldı: model=llama-3.3-70b-versatile
+2026-06-13 20:10:38,643 [INFO] main - [LLM] Yikici payload'lar uretiliyor...
+2026-06-13 20:10:38,643 [INFO] fuzzer_agent - LLM'den fuzzing payload'ları isteniyor...
+2026-06-13 20:10:44,737 [INFO] httpx - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-13 20:10:44,752 [WARNING] fuzzer_agent - JSON array bulunamadı, ham metin parse deneniyor.
+2026-06-13 20:10:44,752 [ERROR] fuzzer_agent - LLM payload üretiminde hata: LLM çıktısında geçerli JSON array yok.
+Traceback (most recent call last):
+  File "C:\Users\pc\Desktop\myprojects\Day 3 AI-Powered API Chaos & Fuzzing Motoru\fuzzer_agent.py", line 133, in generate_payloads
+    payloads = self._parse_llm_response(raw_content)
+  File "C:\Users\pc\Desktop\myprojects\Day 3 AI-Powered API Chaos & Fuzzing Motoru\fuzzer_agent.py", line 163, in _parse_llm_response
+    raise ValueError("LLM çıktısında geçerli JSON array yok.")
+ValueError: LLM çıktısında geçerli JSON array yok.
+2026-06-13 20:10:44,753 [WARNING] fuzzer_agent - Fallback payload'lar kullanılıyor.
+2026-06-13 20:10:44,753 [INFO] main - [LLM] Toplam 15 payload uretildi.
+2026-06-13 20:10:44,753 [INFO] main - [FUZZ] Fuzzing basliyor...
+2026-06-13 20:10:44,753 [INFO] chaos_engine - [START] Fuzzing oturumu basladi. Toplam payload: 15
+2026-06-13 20:10:44,753 [INFO] chaos_engine - [SEND] Payload #1 gonderiliyor: {"username": "test", "age": 0, "email": "t@t.com"}
+2026-06-13 20:10:44,770 [WARNING] chaos_engine - [CRASH!] Payload #1 -> HTTP 500 | Detay: Sıfıra bölme hatası: integer division or modulo by zero
+2026-06-13 20:10:45,281 [INFO] chaos_engine - [SEND] Payload #2 gonderiliyor: {"username": "test", "age": -999, "email": "t@t.com"}
+2026-06-13 20:10:45,284 [INFO] chaos_engine - [OK] Payload #2 -> HTTP 201 (Basarili)
+2026-06-13 20:10:45,796 [INFO] chaos_engine - [SEND] Payload #3 gonderiliyor: {"username": "test", "age": 25, "email": "t@t.com", "bio": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+2026-06-13 20:10:45,799 [WARNING] chaos_engine - [CRASH!] Payload #3 -> HTTP 500 | Detay: Bellek hatası: Bio alanı çok uzun: 10001 karakter (max 10,000)
+2026-06-13 20:10:46,311 [INFO] chaos_engine - [SEND] Payload #4 gonderiliyor: {"username": "test", "age": 25, "email": "t@t.com", "metadata": {"formula": "__import__('os').system('id')"}}
+2026-06-13 20:10:46,338 [INFO] chaos_engine - [OK] Payload #4 -> HTTP 201 (Basarili)
+2026-06-13 20:10:46,840 [INFO] chaos_engine - [SEND] Payload #5 gonderiliyor: {"username": "' OR '1'='1'; DROP TABLE users; --", "age": 25, "email": "sql@inject.com"}
+2026-06-13 20:10:46,843 [INFO] chaos_engine - [OK] Payload #5 -> HTTP 201 (Basarili)
+2026-06-13 20:10:47,356 [INFO] chaos_engine - [SEND] Payload #6 gonderiliyor: {"username": "<script>alert('XSS')</script>", "age": 25, "email": "xss@test.com", "bio": "<img src=x onerror=alert(1)>"}
+2026-06-13 20:10:47,358 [INFO] chaos_engine - [OK] Payload #6 -> HTTP 201 (Basarili)
+2026-06-13 20:10:47,867 [INFO] chaos_engine - [SEND] Payload #7 gonderiliyor: {"username": "test", "age": 25, "email": "t@t.com", "score": Infinity}
+2026-06-13 20:10:47,867 [ERROR] chaos_engine - [REQ ERR] Payload #7 -> Istek hatasi: Out of range float values are not JSON compliant
+2026-06-13 20:10:48,381 [INFO] chaos_engine - [SEND] Payload #8 gonderiliyor: {"username": 12345, "age": "twenty", "email": "t@t.com"}
+2026-06-13 20:10:48,384 [INFO] chaos_engine - [WARN] Payload #8 -> HTTP 422 (Validation Error)
+2026-06-13 20:10:48,895 [INFO] chaos_engine - [SEND] Payload #9 gonderiliyor: {"username": null, "age": null, "email": null}
+2026-06-13 20:10:48,898 [INFO] chaos_engine - [WARN] Payload #9 -> HTTP 422 (Validation Error)
+2026-06-13 20:10:49,411 [INFO] chaos_engine - [SEND] Payload #10 gonderiliyor: {"username": "test", "age": 99999999999999999999999, "email": "t@t.com"}
+2026-06-13 20:10:49,413 [INFO] chaos_engine - [OK] Payload #10 -> HTTP 201 (Basarili)
+2026-06-13 20:10:49,925 [INFO] chaos_engine - [SEND] Payload #11 gonderiliyor: {"username": "", "age": 25, "email": ""}
+2026-06-13 20:10:49,928 [INFO] chaos_engine - [OK] Payload #11 -> HTTP 201 (Basarili)
+2026-06-13 20:10:50,437 [INFO] chaos_engine - [SEND] Payload #12 gonderiliyor: {"username": "test", "age": 25, "email": "t@t.com", "metadata": {"formula": "1/0", "nested": {"formula": "exit()"}}}
+2026-06-13 20:10:50,440 [WARNING] chaos_engine - [CRASH!] Payload #12 -> HTTP 500 | Detay: Çalışma zamanı hatası: Formula değerlendirme hatası: division by zero
+2026-06-13 20:10:50,952 [INFO] chaos_engine - [SEND] Payload #13 gonderiliyor: {"username": "\ud83d\ude08\ud83d\udc80\ud83d\udd25\ud83d\ude08\ud83d\udc80\ud83d\udd25\ud83d\ude08\ud83d\udc80\ud83d\udd
+2026-06-13 20:11:00,958 [WARNING] chaos_engine - [TIMEOUT] Payload #13 -> Timeout (10 s)
+2026-06-13 20:11:01,472 [INFO] chaos_engine - [SEND] Payload #14 gonderiliyor: {"username": true, "age": false, "email": true}
+2026-06-13 20:11:11,493 [WARNING] chaos_engine - [TIMEOUT] Payload #14 -> Timeout (10 s)
+2026-06-13 20:11:12,007 [INFO] chaos_engine - [SEND] Payload #15 gonderiliyor: {"username": ["admin", "root"], "age": [1, 2, 3], "email": {"key": "value"}}
+2026-06-13 20:11:22,032 [WARNING] chaos_engine - [TIMEOUT] Payload #15 -> Timeout (10 s)
+2026-06-13 20:11:22,533 [INFO] chaos_engine - [DONE] Fuzzing tamamlandi. Gonderilen: 15 | Crash: 3 | Hata: 4 | Sure: 37.8s
+2026-06-13 20:11:22,533 [INFO] chaos_engine - [REPORT] Bug Report olusturuluyor: bug_report.md
+2026-06-13 20:11:22,535 [INFO] chaos_engine - [SAVED] Bug Report kaydedildi: C:\Users\pc\Desktop\myprojects\Day 3 AI-Powered API Chaos & Fuzzing Motoru\bug_report.md
+2026-06-13 20:11:22,536 [INFO] main - ============================================================
+2026-06-13 20:11:22,536 [INFO] main -   [DONE] FUZZING OTURUMU TAMAMLANDI
+2026-06-13 20:11:22,536 [INFO] main -   Gonderilen Payload  : 15
+2026-06-13 20:11:22,536 [INFO] main -   Crash (HTTP 500)    : 3
+2026-06-13 20:11:22,536 [INFO] main -   Baglanti Hatalari   : 4
+2026-06-13 20:11:22,536 [INFO] main -   Crash Orani         : 20.0%
+2026-06-13 20:11:22,536 [INFO] main -   Toplam Sure         : 37.8 saniye
+2026-06-13 20:11:22,536 [INFO] main -   Bug Report          : C:\Users\pc\Desktop\myprojects\Day 3 AI-Powered API Chaos & Fuzzing Motoru\bug_report.md
+2026-06-13 20:11:22,536 [INFO] main -   Log Dosyasi         : chaos_run.log
+2026-06-13 20:11:22,537 [INFO] main - ============================================================
+2026-06-13 20:11:22,537 [WARNING] main - [!!!] 3 adet HTTP 500 (crash) tespit edildi! Detaylar icin bug_report.md inceleniyor.
+2026-06-13 20:11:22,537 [INFO] main - [STOP] Target API kapatiliyor (PID: 12608)...
+2026-06-13 20:11:22,538 [INFO] main - [OK] Target API sureci duzgun kapatildi.
+2026-06-13 20:16:16,326 [INFO] main - ============================================================
+2026-06-13 20:16:16,326 [INFO] main -   [*] AI-Powered API Chaos & Fuzzing Motoru
+2026-06-13 20:16:16,327 [INFO] main -   Groq Llama-3.3 + LangChain + FastAPI
+2026-06-13 20:16:16,327 [INFO] main - ============================================================
+2026-06-13 20:16:16,327 [INFO] main - [OK] GROQ_API_KEY yuklendi. (ilk 8 karakter: gsk_PnFC...)
+2026-06-13 20:16:16,327 [INFO] main - [SETUP] Target API baslatiliyor (subprocess)...
+2026-06-13 20:16:16,330 [INFO] main - [OK] Target API sureci baslatildi. PID: 15476
+2026-06-13 20:16:19,900 [INFO] chaos_engine - ChaosEngine başlatıldı: target=http://127.0.0.1:8000/register
+2026-06-13 20:16:19,901 [INFO] chaos_engine - [ChaosEngine] API bekleniyor: http://127.0.0.1:8000/health
+2026-06-13 20:16:19,911 [INFO] chaos_engine - [OK] Hedef API hazir. (1.0 saniyede)
+2026-06-13 20:16:19,911 [INFO] main - [LLM] FuzzerAgent baslatiliyor...
+2026-06-13 20:16:20,483 [INFO] fuzzer_agent - FuzzerAgent başlatıldı: model=llama-3.3-70b-versatile
+2026-06-13 20:16:20,484 [INFO] main - [LLM] Yikici payload'lar uretiliyor...
+2026-06-13 20:16:20,484 [INFO] fuzzer_agent - LLM'den fuzzing payload'ları isteniyor...
+2026-06-13 20:16:21,776 [INFO] httpx - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-13 20:16:21,791 [ERROR] fuzzer_agent - JSON parse hatası: Expecting ',' delimiter: line 4 column 77 (char 207)
+2026-06-13 20:16:21,791 [ERROR] fuzzer_agent - LLM payload üretiminde hata: Expecting ',' delimiter: line 4 column 77 (char 207)
+Traceback (most recent call last):
+  File "C:\Users\pc\Desktop\myprojects\Day 3 AI-Powered API Chaos & Fuzzing Motoru\fuzzer_agent.py", line 133, in generate_payloads
+    payloads = self._parse_llm_response(raw_content)
+  File "C:\Users\pc\Desktop\myprojects\Day 3 AI-Powered API Chaos & Fuzzing Motoru\fuzzer_agent.py", line 168, in _parse_llm_response
+    payloads = json.loads(json_str)
+  File "C:\Users\pc\AppData\Local\Programs\Python\Python310\lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+  File "C:\Users\pc\AppData\Local\Programs\Python\Python310\lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "C:\Users\pc\AppData\Local\Programs\Python\Python310\lib\json\decoder.py", line 353, in raw_decode
+    obj, end = self.scan_once(s, idx)
+json.decoder.JSONDecodeError: Expecting ',' delimiter: line 4 column 77 (char 207)
+2026-06-13 20:16:21,794 [WARNING] fuzzer_agent - Fallback payload'lar kullanılıyor.
+2026-06-13 20:16:21,794 [INFO] main - [LLM] Toplam 15 payload uretildi.
+2026-06-13 20:16:21,794 [INFO] main - [FUZZ] Fuzzing basliyor...
+2026-06-13 20:16:21,794 [INFO] chaos_engine - [START] Fuzzing oturumu basladi. Toplam payload: 15
+2026-06-13 20:16:21,794 [INFO] chaos_engine - [SEND] Payload #1 gonderiliyor: {"username": "test", "age": 0, "email": "t@t.com"}
+2026-06-13 20:16:21,799 [WARNING] chaos_engine - [CRASH!] Payload #1 -> HTTP 500 | Detay: Sıfıra bölme hatası: integer division or modulo by zero
+2026-06-13 20:16:22,309 [INFO] chaos_engine - [SEND] Payload #2 gonderiliyor: {"username": "test", "age": -999, "email": "t@t.com"}
+2026-06-13 20:16:22,312 [INFO] chaos_engine - [OK] Payload #2 -> HTTP 201 (Basarili)
+2026-06-13 20:16:22,826 [INFO] chaos_engine - [SEND] Payload #3 gonderiliyor: {"username": "test", "age": 25, "email": "t@t.com", "bio": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+2026-06-13 20:16:22,829 [WARNING] chaos_engine - [CRASH!] Payload #3 -> HTTP 500 | Detay: Bellek hatası: Bio alanı çok uzun: 10001 karakter (max 10,000)
+2026-06-13 20:16:23,344 [INFO] chaos_engine - [SEND] Payload #4 gonderiliyor: {"username": "test", "age": 25, "email": "t@t.com", "metadata": {"formula": "__import__('os').system('id')"}}
+2026-06-13 20:16:23,365 [INFO] chaos_engine - [OK] Payload #4 -> HTTP 201 (Basarili)
+2026-06-13 20:16:23,878 [INFO] chaos_engine - [SEND] Payload #5 gonderiliyor: {"username": "' OR '1'='1'; DROP TABLE users; --", "age": 25, "email": "sql@inject.com"}
+2026-06-13 20:16:23,880 [INFO] chaos_engine - [OK] Payload #5 -> HTTP 201 (Basarili)
+2026-06-13 20:16:24,385 [INFO] chaos_engine - [SEND] Payload #6 gonderiliyor: {"username": "<script>alert('XSS')</script>", "age": 25, "email": "xss@test.com", "bio": "<img src=x onerror=alert(1)>"}
+2026-06-13 20:16:24,387 [INFO] chaos_engine - [OK] Payload #6 -> HTTP 201 (Basarili)
+2026-06-13 20:16:24,888 [INFO] chaos_engine - [SEND] Payload #7 gonderiliyor: {"username": "test", "age": 25, "email": "t@t.com", "score": Infinity}
+2026-06-13 20:16:24,888 [ERROR] chaos_engine - [REQ ERR] Payload #7 -> Istek hatasi: Out of range float values are not JSON compliant
+2026-06-13 20:16:25,393 [INFO] chaos_engine - [SEND] Payload #8 gonderiliyor: {"username": 12345, "age": "twenty", "email": "t@t.com"}
+2026-06-13 20:16:25,395 [INFO] chaos_engine - [WARN] Payload #8 -> HTTP 422 (Validation Error)
+2026-06-13 20:16:25,896 [INFO] chaos_engine - [SEND] Payload #9 gonderiliyor: {"username": null, "age": null, "email": null}
+2026-06-13 20:16:25,898 [INFO] chaos_engine - [WARN] Payload #9 -> HTTP 422 (Validation Error)
+2026-06-13 20:16:26,400 [INFO] chaos_engine - [SEND] Payload #10 gonderiliyor: {"username": "test", "age": 99999999999999999999999, "email": "t@t.com"}
+2026-06-13 20:16:26,403 [INFO] chaos_engine - [OK] Payload #10 -> HTTP 201 (Basarili)
+2026-06-13 20:16:26,903 [INFO] chaos_engine - [SEND] Payload #11 gonderiliyor: {"username": "", "age": 25, "email": ""}
+2026-06-13 20:16:26,905 [INFO] chaos_engine - [OK] Payload #11 -> HTTP 201 (Basarili)
+2026-06-13 20:16:27,420 [INFO] chaos_engine - [SEND] Payload #12 gonderiliyor: {"username": "test", "age": 25, "email": "t@t.com", "metadata": {"formula": "1/0", "nested": {"formula": "exit()"}}}
+2026-06-13 20:16:27,423 [WARNING] chaos_engine - [CRASH!] Payload #12 -> HTTP 500 | Detay: Çalışma zamanı hatası: Formula değerlendirme hatası: division by zero
+2026-06-13 20:16:27,938 [INFO] chaos_engine - [SEND] Payload #13 gonderiliyor: {"username": "\ud83d\ude08\ud83d\udc80\ud83d\udd25\ud83d\ude08\ud83d\udc80\ud83d\udd25\ud83d\ude08\ud83d\udc80\ud83d\udd
+2026-06-13 20:16:37,941 [WARNING] chaos_engine - [TIMEOUT] Payload #13 -> Timeout (10 s)
+2026-06-13 20:16:38,456 [INFO] chaos_engine - [SEND] Payload #14 gonderiliyor: {"username": true, "age": false, "email": true}
+2026-06-13 20:16:48,474 [WARNING] chaos_engine - [TIMEOUT] Payload #14 -> Timeout (10 s)
+2026-06-13 20:16:48,987 [INFO] chaos_engine - [SEND] Payload #15 gonderiliyor: {"username": ["admin", "root"], "age": [1, 2, 3], "email": {"key": "value"}}
+2026-06-13 20:16:59,011 [WARNING] chaos_engine - [TIMEOUT] Payload #15 -> Timeout (10 s)
+2026-06-13 20:16:59,526 [INFO] chaos_engine - [DONE] Fuzzing tamamlandi. Gonderilen: 15 | Crash: 3 | Hata: 4 | Sure: 37.7s
+2026-06-13 20:16:59,526 [INFO] chaos_engine - [REPORT] Bug Report olusturuluyor: bug_report.md
+2026-06-13 20:16:59,529 [INFO] chaos_engine - [SAVED] Bug Report kaydedildi: C:\Users\pc\Desktop\myprojects\Day 3 AI-Powered API Chaos & Fuzzing Motoru\bug_report.md
+2026-06-13 20:16:59,529 [INFO] main - ============================================================
+2026-06-13 20:16:59,529 [INFO] main -   [DONE] FUZZING OTURUMU TAMAMLANDI
+2026-06-13 20:16:59,529 [INFO] main -   Gonderilen Payload  : 15
+2026-06-13 20:16:59,529 [INFO] main -   Crash (HTTP 500)    : 3
+2026-06-13 20:16:59,530 [INFO] main -   Baglanti Hatalari   : 4
+2026-06-13 20:16:59,530 [INFO] main -   Crash Orani         : 20.0%
+2026-06-13 20:16:59,530 [INFO] main -   Toplam Sure         : 37.7 saniye
+2026-06-13 20:16:59,531 [INFO] main -   Bug Report          : C:\Users\pc\Desktop\myprojects\Day 3 AI-Powered API Chaos & Fuzzing Motoru\bug_report.md
+2026-06-13 20:16:59,531 [INFO] main -   Log Dosyasi         : chaos_run.log
+2026-06-13 20:16:59,531 [INFO] main - ============================================================
+2026-06-13 20:16:59,531 [WARNING] main - [!!!] 3 adet HTTP 500 (crash) tespit edildi! Detaylar icin bug_report.md inceleniyor.
+2026-06-13 20:16:59,531 [INFO] main - [STOP] Target API kapatiliyor (PID: 15476)...
+2026-06-13 20:16:59,533 [INFO] main - [OK] Target API sureci duzgun kapatildi.
